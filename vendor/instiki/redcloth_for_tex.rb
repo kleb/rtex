@@ -119,7 +119,10 @@ class RedClothForTex < String
   [ /\b ?[(\[]R[\])]/i, '&#174;' ], # registered
   [ /\b ?[(\[]C[\])]/i, '&#169;' ] # copyright
   ]
-  
+
+  # could also include \chapter and \part for books
+  SECTION_LEVELS = %w[ \section \subsection \subsubsection \paragraph \subparagraph ]
+
   I_ALGN_VALS = {
         '<' => 'left',
         '=' => 'center',
@@ -367,7 +370,7 @@ class RedClothForTex < String
     text.gsub!( /(.+)\n(?![#*\s|])/, "\\1\\\\\\\\" )
     # text.gsub!( /(.+)\n(?![#*\s|])/, "\\1#{ @fold_lines ? ' ' : '<br />' }" )
   end
-  
+
   def block( text ) 
     pre = false
     find = ['bq','h[1-6]','fn\d+']
@@ -392,8 +395,8 @@ class RedClothForTex < String
           end
           
           if tag =~ /h([1-6])/
-            section_type = "sub" * [$1.to_i - 1, 2].min
-            start = "\t\\#{section_type}section*{"
+            raise "LaTeX sectioning undefined for h6. header" if $1 == '6' 
+            start = "\t\\#{SECTION_LEVELS[$1.to_i-1]}*{"
             tend = "}"                        
           end
           

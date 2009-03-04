@@ -19,6 +19,13 @@ class FilterTest < Test::Unit::TestCase
       doc = document('h6.textile', :filter => 'textile')
       assert_raise(RuntimeError) { doc.source(binding) }
     end
+
+    should "filter textile <pre> tag into verbatim environment" do
+      doc = document('pre_tag.textile', :filter => 'textile')
+      source = doc.source(binding)
+      assert_match '\begin{verbatim}', source
+      assert_match '\end{verbatim}',   source
+    end
   
     should "not affect layouts" do
       doc = document('text.textile',

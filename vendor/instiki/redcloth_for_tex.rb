@@ -410,7 +410,10 @@ class RedClothForTex < String
                     "#{ start }#{ content }#{ tend }"
         end unless pre
       end
-      
+
+      line.gsub!( '<pre>',  '\begin{verbatim}' )
+      line.gsub!( '</pre>', '\end{verbatim}' )
+
       #line.gsub!( /^(?!\t|<\/?pre|<\/?notextile|<\/?code|$| )(.*)/, "\t<p>\\1</p>" )
       
       #line.gsub!( "<br />", "\n" ) if pre

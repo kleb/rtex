@@ -3,24 +3,28 @@ require File.dirname(__FILE__) << '/test_helper'
 class FilterTest < Test::Unit::TestCase
 
   context "Filtering Documents" do
-  
-    should "filter through textile" do
-      doc = document('text.textile', :filter => 'textile')
+
+    should "filter Textile list to LaTeX itemize environment" do  
+      doc = document('itemized_list.textile', :filter => 'textile')
+      assert_match '\item', doc.source(binding)
+    end
+
+    should "filter Textile headers to LaTeX sectioning commands" do
+      doc = document('h1-5_tags.textile', :filter => 'textile')
       source = doc.source(binding)
-      assert source.include?('\item')
-      assert source.include?('\section*{Section}')
-      assert source.include?('\subsection*{Subsection}')
-      assert source.include?('\subsubsection*{Subsubsection}')
-      assert source.include?('\paragraph*{Paragraph}')
-      assert source.include?('\subparagraph*{Subparagraph}')
+      assert_match '\section*{Section}',             source
+      assert_match '\subsection*{Subsection}',       source
+      assert_match '\subsubsection*{Subsubsection}', source
+      assert_match '\paragraph*{Paragraph}',         source
+      assert_match '\subparagraph*{Subparagraph}',   source
     end
   
-    should "fail to filter h6 textile header" do
-      doc = document('h6.textile', :filter => 'textile')
+    should "not filter Textile h6 header" do
+      doc = document('h6_tag.textile', :filter => 'textile')
       assert_raise(RuntimeError) { doc.source(binding) }
     end
 
-    should "filter textile <pre> tag into verbatim environment" do
+    should "filter Textile <pre> tag into verbatim environment" do
       doc = document('pre_tag.textile', :filter => 'textile')
       source = doc.source(binding)
       assert_match '\begin{verbatim}', source
@@ -28,7 +32,7 @@ class FilterTest < Test::Unit::TestCase
     end
   
     should "not affect layouts" do
-      doc = document('text.textile',
+      doc = document('itemized_list.textile',
               :filter => 'textile',
               :layout => "* layout\n* is\n<%= yield %>")
       source = doc.source(binding)

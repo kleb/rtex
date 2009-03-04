@@ -1,8 +1,3 @@
-This is a list:
-* One
-* Two
-* _three_
-
 h1. Section
 
 h2. Subsection

@@ -18,7 +18,10 @@ test/filter_test.rb
 test/fixtures/first.tex
 test/fixtures/first.tex.erb
 test/fixtures/fragment.tex.erb
-test/fixtures/text.textile
+test/fixtures/h1-5_tags.textile
+test/fixtures/h6_tag.textile
+test/fixtures/itemized_list.textile
+test/fixtures/pre_tag.textile
 test/tempdir_test.rb
 test/test_helper.rb
 vendor/instiki/LICENSE

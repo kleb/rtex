@@ -2,6 +2,8 @@ $:.unshift(File.dirname(__FILE__) << '/rtex')
 
 require 'document'
 require 'version'
+require 'rubygems'
+require 'RedCloth'
 
 module RTeX
   
@@ -26,12 +28,9 @@ module RTeX
   def self.filter(name, &block)
     filters[name.to_s] = block
   end
-  
+
   filter :textile do |source|
-    require File.dirname(__FILE__) << '/../vendor/instiki/redcloth_for_tex'
-    RedClothForTex.new(source).to_tex
+    RedCloth.new(source).to_latex
   end
-  
+
 end
-
-

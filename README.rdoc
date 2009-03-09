@@ -1,4 +1,4 @@
-= RTeX: TeX/PDF Generation for Ruby
+= RTeX: LaTeX/PDF Generation for Ruby
 
 Project homepage (FAQ, manual, documentation, contact info): http://rtex.rubyforge.org
 
@@ -6,8 +6,9 @@ Source repository at: http://github.com/bruce/rtex
 
 == Dependencies
 
-* pdflatex executable, available in modern teTeX distributions
+* pdflatex executable, available in modern TeX distributions
 * Requires Rails >= 2.0.1 if used as a plugin.
+* Requires RedCloth > 4.0.0 for Textile formatting.
 
 == Usage
 
